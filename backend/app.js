@@ -23,14 +23,6 @@ const connection = mysql.createConnection({
 });
 var getuse;
 
-// app.post('/createCookie', function (req, res) {
-//   res.cookie('token', token);
-//   res.end("create cookie");
-// });
-
-// app.get('/delcokkie',function(req,res){
-//   res.clearCookie('cookie', token);
-// })
 
 app.post('/register', jsonParser, function (req, res, next) {
   bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
@@ -81,21 +73,6 @@ app.post('/login',jsonParser, function (req, res, next) {
     );
 })
 
-
-// app.post('/logout', (req, res) => {
-//   // Clear the authentication cookie
-//   res.clearCookie('token');
-
-//   // Clear the user's session
-//   req.session.destroy(err => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).send('Failed to destroy session');
-//     } else {
-//       res.send('Logged out successfully');
-//     }
-//   });
-// });
 
 
 app.post("/authen", jsonParser, (req, res, next) =>{
@@ -210,15 +187,7 @@ app.post('/menu', jsonParser, function (req, res, next) {
       }
     });
   })
-  app.get("/order", (req, res) => {
-    connection.query('SELECT * FROM orderWHERE status = "ยืนยันคำสั่งซื้อ" AND date = CURDATE()', (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
-    });
-  })
+
   app.get("/orderconfirmation", (req, res) => {
     connection.query('SELECT order.orderID, order.TotalPrice, order.amount,`order`.`status`, GROUP_CONCAT(order_detail.menu_name," :"," ",order_detail.amount," ") AS detail FROM order, order_detail WHERE  order.orderID = order_detail.orderID AND order.date = CURDATE() AND order.status = "รอยืนยันคำสั่งซื้อ" GROUP BY order.orderID',
      (err, result) => {
