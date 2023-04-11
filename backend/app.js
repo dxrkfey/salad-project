@@ -209,7 +209,7 @@ app.post('/menu', jsonParser, function (req, res, next) {
   })
   
   app.get("/orderfinish", (req, res) => {
-    connection.query('SELECT order.orderID, order.TotalPrice, order.amount,`order`.`status`, GROUP_CONCAT(order_detail.menu_name," :"," ",order_detail.amount," ") AS detail FROM order, order_detail WHERE  order.orderID = order_detail.orderID AND order.date = CURDATE() AND order.status = "เสร็จสิ้น" OR order.status = "ยกเลิกคำสั่งซื้อ" GROUP BY order.orderID', (err, result) => {
+    connection.query('SELECT order.orderID, order.TotalPrice, order.amount,`order`.`status`, GROUP_CONCAT(order_detail.menu_name," :"," ",order_detail.amount," ") AS detail FROM order, order_detail WHERE  order.orderID = order_detail.orderID AND order.status = "เสร็จสิ้น" OR order.status = "ยกเลิกคำสั่งซื้อ" GROUP BY order.orderID', (err, result) => {
       if (err) {
         console.log(err);
       } else {
@@ -217,7 +217,6 @@ app.post('/menu', jsonParser, function (req, res, next) {
       }
     });
   })
-  
   
   
   
